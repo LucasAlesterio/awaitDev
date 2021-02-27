@@ -1,3 +1,45 @@
 .container{
-    
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.container section{
+    min-width: 60rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.container section h1{
+    font-size: 2.5rem;
+    font-weight: 600;
+    padding: 1rem;
+    color: var(--text)
+}
+.container section h4{
+    color: rgba(var(--black-opacity),0.5);
+    font-size: 0.8rem;
+}
+.container .labels , .container .labels div{
+    display: flex;
+}
+.container .labels{
+    justify-content: space-between;
+    padding-bottom: 0.3rem;
+}
+.container .labels h4{
+    font-size: 0.6rem;
+}
+.container .labels .position{
+    width: 4rem;
+    text-align: center;
+}
+.container .labels .user{
+    padding-left: 1.7rem;
+}
+.container .labels .challenges{
+    padding-right: 6rem;
+}
+.container .labels .xp{
+    padding-right: 3rem;
 }

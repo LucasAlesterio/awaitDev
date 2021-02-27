@@ -1,0 +1,88 @@
+.container{
+    width: 100%;
+    display: flex;
+    height: 6rem;
+    align-items: center;
+}
+.container div{
+    background: var(--white);
+    height: 6rem;
+}
+.container .position{
+    border-radius: 5px 0 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    margin-right: 0.3rem;
+    font-size: 1.5rem;
+}
+.container .position > strong{
+    font-size: 1.2rem;
+}
+.container .data{
+    border-radius: 0 5px 5px 0;
+    width: 100%;
+    display: flex;
+    height: 6rem;
+    align-items: center;
+    padding: 0 1rem;
+    justify-content: space-between;
+}
+.container .data .tag{
+    display: flex;
+    height: 6rem;
+    align-items: center;
+}
+.container .data .tag > img{
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+}
+.container .data .tag .nameLevel{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1rem;
+}
+.container .data .tag .nameLevel p {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0;
+}
+.container .data .tag .nameLevel p img{
+    padding-right: 0.5rem;
+}
+.container .data .numbers{
+    display: flex;
+}
+.container .data .challenges{
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.container .data .challenges p{
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+.container .data .challenges strong{
+    color: var(--blue);
+}
+.container .data .xp{
+    padding: 0 2rem;
+    align-self: baseline;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.container .data .xp p{
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+.container .data .xp strong{
+    color: var(--blue);
+}
+
