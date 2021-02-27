@@ -5,7 +5,8 @@ import styles from '../styles/components/Countdown.module.css';
 export function Countdown(){
     const { 
         minutes, 
-        seconds, 
+        seconds,
+        timePercent,
         hasFinished, 
         isActive, 
         resetCountdown, 
@@ -39,13 +40,16 @@ export function Countdown(){
             ):(
                 <>
                     {isActive ? (
-                        <button 
-                        type="button" 
-                        className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
-                        onClick={resetCountdown}
-                        >
-                            Abandonar ciclo
-                        </button>
+                        <div className={styles.containerCountdownButton}>
+                            <button 
+                            type="button" 
+                            className={styles.countdownButtonActive}
+                            onClick={resetCountdown}
+                            >
+                                Abandonar ciclo
+                            </button>
+                            <div style={{width:`${timePercent}%`}} className={styles.progressBar}/>
+                        </div>
                         ):(
                         <button 
                         type="button" 

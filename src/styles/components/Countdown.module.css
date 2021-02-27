@@ -44,13 +44,23 @@
     font-weight: 600;
     transition: background-color 0.2s;
     outline: none;
+    flex-direction: column;
 }
 .countdownButton:not(:disabled):hover{
     background: var(--blue-dark);
 }
+.containerCountdownButton{
+    width: 100%;
+    height: 5rem;
+    margin-top: 2rem;
+}
 .countdownButtonActive{
     background-color: var(--white);
     color: var(--title);
+    width: 100%;
+    height: 5rem;
+    border: 0;
+    border-radius: 5px;
 }
 .countdownButtonActive:not(:disabled):hover{
     background-color: var(--red);
@@ -61,4 +71,9 @@
     color: var(--text);
     cursor: not-allowed;
     border-bottom: 4px var(--green) solid;
+}
+.progressBar{
+    background: var(--green);
+    height: 5px;
+    align-self: baseline;
 }
