@@ -5,6 +5,7 @@ import { CompletedChallenges } from "../components/CompletedChallenges";
 import { Countdown } from "../components/Countdown";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { Profile } from "../components/Profile";
+import SideBar from '../components/SideBar';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import styles from '../styles/pages/Home.module.css';
@@ -30,6 +31,7 @@ export default function Home(
       <Head>
         <title>inicio | move.it</title>
       </Head>
+      <SideBar selected="home"/>
       <ExperienceBar />
       <CountdownProvider>
         <section>
