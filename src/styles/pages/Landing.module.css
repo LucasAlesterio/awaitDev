@@ -1,0 +1,63 @@
+.container{
+    height: 100vh;
+    max-width: 100vw;
+    background-image: linear-gradient(var(--blue),rgb(73, 118, 186));
+    display: flex;
+}
+.container > img{
+    width: 50vw;
+    position: fixed;
+}
+.container section{
+    z-index: 2;
+    position: fixed;
+    right: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 30%;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-right: 10%;
+}
+.container section > img{
+    width: 100%;
+}
+.container section > div{
+    width: 100%;
+}
+.container section h2{
+    color: white;
+}
+.container button{
+    display: flex;
+    background: var(--blue);
+    background-image: linear-gradient(to right,var(--blue-dark), var(--blue));
+    padding: 1rem 0.5rem;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    max-width: 18rem;
+    transition: background 0.8s;
+    border-radius: 5px;
+    margin-top: 1rem;
+}
+.container button:hover{
+    background: var(--blue-dark);
+}
+.container button img{
+    margin-right: 0.5rem;
+}
+.container button p{
+    color: var(--title);
+    text-align: left;
+}
+
+@media(max-width: 750px){
+    .container > img{
+        display: none;
+    }
+    .container section{
+        width: 100%;
+    }
+}
