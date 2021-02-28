@@ -5,7 +5,7 @@ export default function SideBar({selected}){
     return(
         <div className={styles.container}>
             <img src="/icon_logo.svg" alt="logo"/>
-            <Link href="/">
+            <Link href="/home">
                 <a style={selected !== 'home' ? {border: 'none'}: {}}>
                     <img src={ selected === 'home' ? '/home_selected.svg': '/home.svg'} alt="home"/>
                 </a>

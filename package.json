@@ -1,5 +1,5 @@
 {
-  "name": "move_it",
+  "name": "awaitDev",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "js-cookie": "^2.2.1",
     "next": "10.0.7",
     "react": "17.0.1",

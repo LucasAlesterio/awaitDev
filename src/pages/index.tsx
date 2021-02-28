@@ -1,61 +1,38 @@
+import styles from '../styles/pages/Landing.module.css';
+import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import Head from 'next/head';
-import { ChallengeBox } from '../components/ChallengeBox';
-import { CompletedChallenges } from "../components/CompletedChallenges";
-import { Countdown } from "../components/Countdown";
-import { ExperienceBar } from "../components/ExperienceBar";
-import { Profile } from "../components/Profile";
-import SideBar from '../components/SideBar';
-import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { CountdownProvider } from '../contexts/CountdownContext';
-import styles from '../styles/pages/Home.module.css';
 
-interface HomeProps{
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-
-}
-export default function Home(
-  {level,
-  currentExperience,
-  challengesCompleted
-  }) {
-  return (
-  <ChallengesProvider
-  level={level}
-  currentExperience={currentExperience}
-  challengesCompleted={challengesCompleted}
-  >
-    <div className={styles.container}>
-      <Head>
-        <title>inicio | move.it</title>
-      </Head>
-      <SideBar selected="home"/>
-      <ExperienceBar />
-      <CountdownProvider>
-        <section>
-          <div>
-            <Profile />
-            <CompletedChallenges />
-            <Countdown />
-          </div>
-          <div>
-            <ChallengeBox /> 
-          </div>
-        </section>
-      </CountdownProvider>
-    </div>
-  </ChallengesProvider>
-  )
-}
-export const getServerSideProps: GetServerSideProps = async (ctx) =>{
-  const { level,currentExperience, challengesCompleted } = ctx.req.cookies;
-  return{
-    props:{
-      level: Number(level),
-      currentExperience:Number(currentExperience),
-      challengesCompleted:Number(challengesCompleted)
+export default function Landing({client_id}){
+    const router = useRouter();
+    if (router.isFallback) {
+        return <h1 >Loading...</h1>
     }
-  }
+    function login(){
+        router.push(`https://github.com/login/oauth/authorize?scope=user:email&client_id=${client_id}`);
+    }
+    return(
+        <div className={styles.container}>
+            <img src="/landing.svg" alt="Water Mark"/>
+            <section>
+                <img src="/logo.svg" alt="logo"/>
+                <div>
+                    <h2>Bem-vindo</h2>
+                    <button
+                    onClick={login}
+                    >
+                        <img src="/github.svg" alt="logo github"/>
+                        <p>Faça login com seu GitHub para começar</p>
+                    </button>
+                </div>
+            </section>
+        </div>
+    );
+}
+export const getServerSideProps: GetServerSideProps = async () =>{
+    const client_id = process.env.CLIENT_ID;
+    return{
+        props:{
+            client_id
+        }
+    }
 }
