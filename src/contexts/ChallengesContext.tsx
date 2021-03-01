@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 import { createContext, ReactNode, useEffect, useState } from "react";
 import challenges from '../../challenges.json';
 import { LevelUpModal } from "../components/LevelUpModal";
@@ -45,12 +46,16 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
     const [dataUser, setDataUser] = useState({data:{},status:0});
 
+    const { push } = useRouter();
     const experienceToNextLevel = Math.pow(((level + 1) * 4), 2 );
     async function getToken(){
         const token = await Cookies.get('token');
         const response = await axios.get('https://api.github.com/user',{headers:{
             Authorization: `Bearer ${token}`
         }});
+        if(response.status !== 200){
+            push('/');
+        }
         setDataUser(response);
 
     }

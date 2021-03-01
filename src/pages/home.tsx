@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { ChallengeBox } from '../components/ChallengeBox';
 import { CompletedChallenges } from "../components/CompletedChallenges";
 import { Countdown } from "../components/Countdown";
@@ -22,7 +20,7 @@ export default function Home(
   {level,
   currentExperience,
   challengesCompleted
-  }) {
+  }){
 
   return (
   <ChallengesProvider
@@ -53,13 +51,13 @@ export default function Home(
   )
 }
 export const getServerSideProps: GetServerSideProps = async (ctx) =>{
-  const { level,currentExperience, challengesCompleted,dataUser } = ctx.req.cookies;
+  const { level,currentExperience, challengesCompleted } = ctx.req.cookies;
     
   return{
     props:{
       level: Number(level),
       currentExperience:Number(currentExperience),
-      challengesCompleted:Number(challengesCompleted)
+      challengesCompleted:Number(challengesCompleted),
     }
   }
 }

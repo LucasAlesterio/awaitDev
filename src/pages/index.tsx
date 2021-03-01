@@ -1,8 +1,6 @@
-import styles from '../styles/pages/Landing.module.css';
-import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+import styles from '../styles/pages/Landing.module.css';
 
 export default function Landing({client_id}){
     const router = useRouter();

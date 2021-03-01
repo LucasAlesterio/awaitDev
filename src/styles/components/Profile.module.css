@@ -17,6 +17,21 @@
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--title);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profileContainer div button{
+    background: none;
+    border: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    align-self: center;
+    margin-left: 1rem;
+}
+.profileContainer div button img{
+    height: 100%;
+    width: 100%;
 }
 .profileContainer div p{
     font-size: 1rem;
