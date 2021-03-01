@@ -2,12 +2,12 @@ import { useContext } from 'react';
 import { ChallengesContext } from '../contexts/ChallengesContext';
 import styles from '../styles/components/Profile.module.css';
 export function Profile(){
-    const {level} = useContext(ChallengesContext);
+    const {level,dataUser} = useContext(ChallengesContext);
     return(
         <div className={styles.profileContainer}>
-            <img src="https://github.com/LucasAlesterio.png" alt="Lucas"/>
+            <img src={dataUser.data? dataUser.data.avatar_url: 'https://image.flaticon.com/icons/png/512/44/44948.png'} alt="Lucas" loading="lazy"/>
             <div>
-                <strong>Lucas Alesterio</strong>
+                <strong>{dataUser.data ? dataUser.data.login : ''}</strong>
                 <p>
                     <img src="icons/level.svg" alt="level"/>
                     Level {level}

@@ -1,12 +1,17 @@
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import { createContext, ReactNode, useEffect, useState } from "react";
 import challenges from '../../challenges.json';
-import Cookies from 'js-cookie';
 import { LevelUpModal } from "../components/LevelUpModal";
 
 interface Challenge{
     type: 'body' | 'eye';
     description: string;
     amount: number;
+}
+interface DataUser{
+    data: any;
+    status: number;
 }
 interface ChallengesContextData{
     level: number; 
@@ -19,6 +24,7 @@ interface ChallengesContextData{
     experienceToNextLevel: number;
     completeChallenge: ()=>void;
     closeLevelUpModal: ()=>void;
+    dataUser:DataUser;
 }
 
 interface ChallengesProviderProps{
@@ -35,13 +41,23 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
     const [level, setLevel] = useState(rest.level ?? 1);
     const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0);
     const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
-    const [activeChallenge, setActiveChallege] = useState(null);
+    const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
+    const [dataUser, setDataUser] = useState({data:{},status:0});
 
     const experienceToNextLevel = Math.pow(((level + 1) * 4), 2 );
+    async function getToken(){
+        const token = await Cookies.get('token');
+        const response = await axios.get('https://api.github.com/user',{headers:{
+            Authorization: `Bearer ${token}`
+        }});
+        setDataUser(response);
+
+    }
 
     useEffect(() => {
         Notification.requestPermission();
+        getToken();
     }, [])
 
     useEffect(()=>{
@@ -62,7 +78,7 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
     function startNewChallenge(){
         const randomChallengerIndex = Math.floor(Math.random() * challenges.length)
         const challenge = challenges[randomChallengerIndex];
-        setActiveChallege(challenge);
+        setActiveChallenge(challenge);
 
         new Audio('/notification.mp3').play();
 
@@ -79,7 +95,7 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
 
     }
     function resetChallenge(){
-        setActiveChallege(null);
+        setActiveChallenge(null);
     }
     function completeChallenge(){
         if(!activeChallenge){
@@ -94,7 +110,7 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
             levelUp()
         }
         setCurrentExperience(finalExperience);
-        setActiveChallege(null);
+        setActiveChallenge(null);
         setChallengesCompleted(challengesCompleted + 1);
     }
     return(
@@ -108,7 +124,8 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
             resetChallenge,
             experienceToNextLevel,
             completeChallenge,
-            closeLevelUpModal
+            closeLevelUpModal,
+            dataUser
         }}>
             {children}
             {isLevelUpModalOpen &&

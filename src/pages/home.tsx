@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { ChallengeBox } from '../components/ChallengeBox';
 import { CompletedChallenges } from "../components/CompletedChallenges";
 import { Countdown } from "../components/Countdown";
@@ -9,22 +11,18 @@ import SideBar from '../components/SideBar';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import styles from '../styles/pages/Home.module.css';
-import { useRouter } from 'next/router';
 
 interface HomeProps{
   level: number;
   currentExperience: number;
   challengesCompleted: number;
-
 }
+
 export default function Home(
   {level,
   currentExperience,
   challengesCompleted
   }) {
-
-  const {query} = useRouter();
-  console.log(query.code);
 
   return (
   <ChallengesProvider
@@ -34,7 +32,7 @@ export default function Home(
   >
     <div className={styles.container}>
       <Head>
-        <title>inicio | move.it</title>
+        <title>Await Dev</title>
       </Head>
       <SideBar selected="home"/>
       <ExperienceBar />
@@ -55,8 +53,8 @@ export default function Home(
   )
 }
 export const getServerSideProps: GetServerSideProps = async (ctx) =>{
-  const { level,currentExperience, challengesCompleted } = ctx.req.cookies;
-
+  const { level,currentExperience, challengesCompleted,dataUser } = ctx.req.cookies;
+    
   return{
     props:{
       level: Number(level),
