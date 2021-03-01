@@ -14,6 +14,7 @@ interface DataUser{
     data: any;
     status: number;
 }
+
 interface ChallengesContextData{
     level: number; 
     currentExperience: number;
@@ -26,6 +27,8 @@ interface ChallengesContextData{
     completeChallenge: ()=>void;
     closeLevelUpModal: ()=>void;
     dataUser:DataUser;
+    page: string;
+    changePage: (args: 'home' | 'award')=>void;
 }
 
 interface ChallengesProviderProps{
@@ -45,6 +48,8 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
     const [dataUser, setDataUser] = useState({data:{},status:0});
+    const [page, setPage] = useState('home');
+
 
     const { push } = useRouter();
     const experienceToNextLevel = Math.pow(((level + 1) * 4), 2 );
@@ -57,7 +62,10 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
             push('/');
         }
         setDataUser(response);
+    }
 
+    function changePage(page:'home'|'award'){
+        setPage(page);
     }
 
     useEffect(() => {
@@ -130,7 +138,9 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
             experienceToNextLevel,
             completeChallenge,
             closeLevelUpModal,
-            dataUser
+            dataUser,
+            page,
+            changePage
         }}>
             {children}
             {isLevelUpModalOpen &&
