@@ -9,7 +9,7 @@ export default function Callback({client_id,client_secret}){
     const route = useRouter();
 
     async function getToken(code){
-        await axios.post('http://localhost:3000/api/authenticate',{
+        await axios.post('api/authenticate',{
             client_id,
             client_secret,
             code

@@ -22,9 +22,7 @@ export default function Home(
 
   return (
   <ChallengesProvider
-  level={level}
-  currentExperience={currentExperience}
-  challengesCompleted={challengesCompleted}
+
   ><CountdownProvider>
     <SideBar selected={page} changePage={setPage}/>
     <Head>

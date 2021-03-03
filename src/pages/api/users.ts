@@ -26,10 +26,9 @@ export default async (req: NextApiRequest , res: NextApiResponse) => {
                             currentExperience
                             challengesCompleted
                             level
-                    }
-                }
-                `;
-
+                        }
+                    }`;
+                
                 currentExperience = parseInt(currentExperience);
                 challengesCompleted = parseInt(challengesCompleted);
                 level = parseInt(challengesCompleted);

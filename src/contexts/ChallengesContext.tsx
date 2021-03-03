@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useCallback, useEffect, useState } from "react";
 import challenges from '../../challenges.json';
 import { LevelUpModal } from "../components/LevelUpModal";
 
@@ -11,10 +11,11 @@ interface Challenge{
     amount: number;
 }
 interface DataUser{
-    data: any;
+    data:{
+        login:string;
+    }
     status: number;
 }
-
 interface ChallengesContextData{
     level: number; 
     currentExperience: number;
@@ -26,7 +27,7 @@ interface ChallengesContextData{
     experienceToNextLevel: number;
     completeChallenge: ()=>void;
     closeLevelUpModal: ()=>void;
-    dataUser:DataUser;
+    dataUser: DataUser;
     page: string;
     changePage: (args: 'home' | 'award')=>void;
 }
@@ -40,43 +41,94 @@ interface ChallengesProviderProps{
 
 export const ChallengesContext = createContext({} as ChallengesContextData);
 
-export function ChallengesProvider({ children, ...rest }: ChallengesProviderProps){
+export function ChallengesProvider({ children}: ChallengesProviderProps){
 
-    const [level, setLevel] = useState(rest.level ?? 1);
-    const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0);
-    const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
+    const [level, setLevel] = useState(1);
+    const [currentExperience, setCurrentExperience] = useState(0);
+    const [challengesCompleted, setChallengesCompleted] = useState(0);
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
-    const [dataUser, setDataUser] = useState({data:{},status:0});
+    const [dataUser, setDataUser] = useState({data:{login:""},status:-1});
     const [page, setPage] = useState('home');
+    const [idUser, setIdUser] = useState("");
 
+    async function userExists(){
+        const {data} = await axios.get(`api/users?user=${dataUser.data.login}`)
+        if(data.findUserByUser){
+            setLevel(data.findUserByUser.level);
+            setChallengesCompleted(data.findUserByUser.challengesCompleted);
+            setCurrentExperience(data.findUserByUser.currentExperience);
+            setIdUser(data.findUserByUser._id);
+        }else{
+            const response = await axios.post(`api/users`,{
+                user: dataUser.data.login,
+                currentExperience:0,
+                challengesCompleted:0,
+                level:1
+            })
+            if(response.status !== 200){
+                push('/');
+            }
+        }
+    }
 
     const { push } = useRouter();
     const experienceToNextLevel = Math.pow(((level + 1) * 4), 2 );
     async function getToken(){
         const token = await Cookies.get('token');
-        const response = await axios.get('https://api.github.com/user',{headers:{
-            Authorization: `Bearer ${token}`
-        }});
-        if(response.status !== 200){
+        try{
+            const response = await axios.get('https://api.github.com/user',{headers:{
+                Authorization: `Bearer ${token}`
+            }});
+            if(response.status !== 200){
+                push('/');
+            }
+            setDataUser(response);
+        }catch(error){
+            console.log(error);
             push('/');
         }
-        setDataUser(response);
     }
 
     function changePage(page:'home'|'award'){
         setPage(page);
     }
 
+    useEffect(()=>{
+        if(dataUser.data.login){
+            userExists();
+        }
+    },[dataUser])
+
     useEffect(() => {
         Notification.requestPermission();
         getToken();
+        if(dataUser.data.login){
+            userExists();
+        }
     }, [])
 
+
+    async function updateData(){
+        if(dataUser.data.login && idUser){
+            console.log("Update database")
+            const body = {
+                id: idUser,
+                user: dataUser.data.login,
+                currentExperience: currentExperience,
+                challengesCompleted: challengesCompleted,
+                level:level
+            }
+            console.log(body);
+            await axios.put('api/users',body)
+        }
+    }
     useEffect(()=>{
-        Cookies.set('level',String(level));
-        Cookies.set('currentExperience',String(currentExperience));
-        Cookies.set('challengesCompleted',String(challengesCompleted));
+        updateData();
+        //console.log('Start');
+        // Cookies.set('level',String(level));
+        // Cookies.set('currentExperience',String(currentExperience));
+        // Cookies.set('challengesCompleted',String(challengesCompleted));
     },[level,currentExperience,challengesCompleted])
 
     function levelUp(){
