@@ -10,6 +10,9 @@
   "dependencies": {
     "axios": "^0.21.1",
     "cors": "^2.8.5",
+    "faunadb": "^4.1.1",
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
     "js-cookie": "^2.2.1",
     "next": "10.0.7",
     "react": "17.0.1",

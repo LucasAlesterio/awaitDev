@@ -1,0 +1,29 @@
+type User{
+    user: String! @unique
+    currentExperience: Int!
+    challengesCompleted: Int!
+    level: Int!
+}
+type Query {
+    allUsers: [User!]
+    findUserByID(user: String!): User
+    findUserByUser(user: String!) : User
+}
+
+input UserInput {
+    user: String!
+    currentExperience: Int!
+    challengesCompleted: Int!
+    level: Int!
+}
+type Mutation {
+    partialUpdateUser(
+        user: String!
+        data:PartialUpdateUserInput !
+    ):User @resolver
+}
+input PartialUpdateUserInput  {
+    currentExperience: Int
+    challengesCompleted:Int
+    level: Int
+}

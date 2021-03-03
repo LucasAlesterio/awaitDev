@@ -2,6 +2,7 @@
 import initMiddleware from '../../lib/init-middleware';
 import Cors from 'cors';
 import axios from 'axios';
+import { NextApiRequest, NextApiResponse } from 'next';
 // Initialize the cors middleware
 const cors = initMiddleware(
   // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
@@ -11,7 +12,7 @@ const cors = initMiddleware(
   })
 )
 
-export default async (req , res) => {
+export default async (req: NextApiRequest , res: NextApiResponse) => {
   await cors(req, res);
   const {
     body: { 
