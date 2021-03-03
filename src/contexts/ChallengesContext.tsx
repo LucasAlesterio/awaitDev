@@ -13,6 +13,7 @@ interface Challenge{
 interface DataUser{
     data:{
         login:string;
+        avatar_url: string;
     }
     status: number;
 }
@@ -48,7 +49,7 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
     const [challengesCompleted, setChallengesCompleted] = useState(0);
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
-    const [dataUser, setDataUser] = useState({data:{login:""},status:-1});
+    const [dataUser, setDataUser] = useState({data:{login:"",avatar_url:""},status:-1});
     const [page, setPage] = useState('home');
     const [idUser, setIdUser] = useState("");
 

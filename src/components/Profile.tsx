@@ -12,7 +12,7 @@ export function Profile(){
     }
     return(
         <div className={styles.profileContainer}>
-            <img src={dataUser.data? dataUser.data.avatar_url: 'https://image.flaticon.com/icons/png/512/44/44948.png'} alt="Lucas" />
+            <img src={dataUser.data.avatar_url ? dataUser.data.avatar_url: 'https://image.flaticon.com/icons/png/512/44/44948.png'} alt="Lucas" />
             <div>
                 <strong>{dataUser.data ? dataUser.data.login : ''}
                     <button onClick={logOut} title="Sair">
