@@ -3,6 +3,7 @@ import { ChallengesContext } from '../contexts/ChallengesContext';
 import styles from '../styles/components/Profile.module.css';
 import Cookie from 'js-cookie';
 import { useRouter } from 'next/router';
+
 export function Profile(){
     const {level,dataUser} = useContext(ChallengesContext);
     const {push} = useRouter();

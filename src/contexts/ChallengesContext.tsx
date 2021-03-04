@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
-import { createContext, ReactNode, useCallback, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import challenges from '../../challenges.json';
 import { LevelUpModal } from "../components/LevelUpModal";
 
@@ -31,6 +31,16 @@ interface ChallengesContextData{
     dataUser: DataUser;
     page: string;
     changePage: (args: 'home' | 'award')=>void;
+    idUser: string;
+    usersRegistered: UserRegistered[];
+}
+
+interface UserRegistered{
+    photo: string;
+    user: string;
+    level: number;
+    challengesCompleted: number;
+    currentExperience: number;
 }
 
 interface ChallengesProviderProps{
@@ -49,31 +59,20 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
     const [dataUser, setDataUser] = useState({data:{login:"",avatar_url:""},status:-1});
     const [page, setPage] = useState('home');
     const [idUser, setIdUser] = useState("");
+    const [followers, setFollowers] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
+    const [usersRegistered, setUsersRegistered] = useState([]);
 
-    async function userExists(){
-        const {data} = await axios.get(`api/users?user=${dataUser.data.login}`)
-        if(data.findUserByUser){
-            setLevel(data.findUserByUser.level);
-            setChallengesCompleted(data.findUserByUser.challengesCompleted);
-            setCurrentExperience(data.findUserByUser.currentExperience);
-            setIdUser(data.findUserByUser._id);
-        }else{
-            const response = await axios.post(`api/users`,{
-                user: dataUser.data.login,
-                currentExperience:0,
-                challengesCompleted:0,
-                level:1
-            })
-            if(response.status !== 200){
-                push('/');
-            }
-        }
-    }
+    const token = Cookies.get('token');
 
     const { push } = useRouter();
     const experienceToNextLevel = Math.pow(((level + 1) * 4), 2 );
-    async function getToken(){
-        const token = await Cookies.get('token');
+
+    function changePage(page:'home'|'award'){
+        setPage(page);
+    }
+
+    async function getUser(){
         try{
             const response = await axios.get('https://api.github.com/user',{headers:{
                 Authorization: `Bearer ${token}`
@@ -88,24 +87,82 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
         }
     }
 
-    function changePage(page:'home'|'award'){
-        setPage(page);
+    useEffect(() => {
+        Notification.requestPermission();
+        getUser();
+    }, [])
+
+    const getFollowers  = async() => {
+        const {data} = await axios.get('https://api.github.com/user/followers',{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        })
+        setFollowers(data);
+    }
+    
+    const getAllUsers = async() =>{
+        const {data} = await axios.get('api/users');
+        setAllUsers(data.allUsers.data);
     }
 
     useEffect(()=>{
-        if(dataUser.data.login){
-            userExists();
-        }
-    },[dataUser])
+        if(followers.length > 0 
+            && allUsers.length > 0 
+            && usersRegistered.length === 0 
+            && dataUser.data.login
+            && idUser){
+            let awards = followers.map((follow)=>{
+                let thisUser = (allUsers.find((user) => user.user === follow.login)) ;
+                if(thisUser){
+                    thisUser.photo = follow.avatar_url;
+                }
+                return thisUser;
+            })
+            awards = awards.filter((award)=>{return award !== undefined});
+            awards.push({
+                photo: dataUser.data.avatar_url,
+                user: dataUser.data.login,
+                level: level,
+                challengesCompleted:challengesCompleted,
+                currentExperience:currentExperience
+            })
+            awards = awards.sort((user)=>user.currentExperience)
+            setUsersRegistered(awards);
+        } 
+    },[followers,allUsers,dataUser])
 
-    useEffect(() => {
-        Notification.requestPermission();
-        getToken();
+    useEffect(()=>{
         if(dataUser.data.login){
-            userExists();
+            axios.get(`api/users?user=${dataUser.data.login}`).then(({data})=>{
+                if(data.findUserByUser){
+                    setChallengesCompleted(data.findUserByUser.challengesCompleted);
+                    setLevel(data.findUserByUser.level);
+                    setCurrentExperience(data.findUserByUser.currentExperience);
+                    setIdUser(data.findUserByUser._id);
+                }else{
+                    axios.post(`api/users`,{
+                        user: dataUser.data.login,
+                        currentExperience:0,
+                        challengesCompleted:0,
+                        level:1
+                    }).then((response)=>{
+                        if(response.status !== 200){
+                            push('/');
+                        }
+                    }).catch((err)=>{
+                        console.log(err);
+                        push('/')
+                    })
+                }
+            }).catch((err)=>{
+                console.log(err);
+                push('/')
+            })
         }
-    }, [])
-
+        getAllUsers();
+        getFollowers();
+    },[dataUser]);
 
     async function updateData(){
         if(dataUser.data.login && idUser){
@@ -117,16 +174,11 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
                 challengesCompleted: challengesCompleted,
                 level:level
             }
-            console.log(body);
             await axios.put('api/users',body)
         }
     }
     useEffect(()=>{
         updateData();
-        //console.log('Start');
-        // Cookies.set('level',String(level));
-        // Cookies.set('currentExperience',String(currentExperience));
-        // Cookies.set('challengesCompleted',String(challengesCompleted));
     },[level,currentExperience,challengesCompleted])
 
     function levelUp(){
@@ -150,7 +202,6 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
                 body: `Valendo ${challenge.amount}xp!`,
                 silent: true,
                 icon: '/favicon.png',
-                //image: `/icons/${challenge.type}.svg`
             }).onclick = () => {
                 window.focus();
             };
@@ -190,7 +241,9 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
             closeLevelUpModal,
             dataUser,
             page,
-            changePage
+            changePage,
+            idUser,
+            usersRegistered
         }}>
             {children}
             {isLevelUpModalOpen &&
