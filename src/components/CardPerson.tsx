@@ -20,7 +20,7 @@ export default function CardPerson({position,photo,name,level, challenges,xp}){
                 </div>
                 <div className={styles.numbers}>
                     <div className={styles.challenges}>
-                        <p><strong>{challenges}</strong> completados</p>
+                        <p><strong>{challenges}</strong> desafios</p>
                     </div>
                     <div className={styles.xp}>
                         <p><strong>{xp}</strong> xp</p>

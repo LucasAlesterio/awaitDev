@@ -62,7 +62,9 @@ export function CountdownProvider({ children }: CountdownProviderProps){
             startCountdown,
             resetCountdown,
         }}>
-            {children}
+            <div style={{display: 'flex',height: '100%',width:'100%'}}>
+                {children}
+            </div>
         </CountdownContext.Provider>
     );
 }

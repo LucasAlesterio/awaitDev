@@ -107,9 +107,9 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
     }
 
     useEffect(()=>{
-        if(followers.length > 0 
-            && allUsers.length > 0 
-            && usersRegistered.length === 0 
+        if(followers.length > 0
+            && allUsers.length > 0
+            && usersRegistered.length === 0
             && dataUser.data.login
             && idUser){
             let awards = followers.map((follow)=>{
@@ -245,7 +245,9 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
             idUser,
             usersRegistered
         }}>
-            {children}
+            <div style={{display: 'flex',height: '100%',width:'100%'}}>
+                {children}
+            </div>
             {isLevelUpModalOpen &&
                 <LevelUpModal/> 
             }

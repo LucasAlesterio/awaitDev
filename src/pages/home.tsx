@@ -25,6 +25,7 @@ export default function Home(){
     <Head>
       <title>Await Dev</title>
     </Head>
+    <div style={{width: '100%',height: '100%'}}>
     {page === 'home' ? 
     <div className={styles.container}>
       <ExperienceBar />
@@ -39,28 +40,27 @@ export default function Home(){
             <ChallengeBox /> 
           </div>
         </section>
-      
-    </div>:
+    </div>
+    :
     <div className={stylesAwards.container}>
-    <section>
-        <h1>Leaderboard</h1>
-        <div className={stylesAwards.labels}>
-            <div>
-                <h4 className={stylesAwards.position}>POSIÇÃO</h4>
-                <h4 className={stylesAwards.user}>USUÁRIO</h4>
-            </div>
-            <div>
-                <h4 className={stylesAwards.challenges}>DESAFIOS</h4>
-                <h4 className={stylesAwards.xp}>EXPERIÊNCIA</h4>
-            </div>
-        </div>
-        <ListCards />
-        {/* <div>
-          cards
-        </div> */}
-    </section>
+      <section>
+          <h1>Leaderboard</h1>
+          {/* <div className={stylesAwards.labels}>
+              <div>
+                  <h4 className={stylesAwards.position}>POSIÇÃO</h4>
+                  <h4 className={stylesAwards.user}>USUÁRIO</h4>
+              </div>
+              <div>
+                  <h4 className={stylesAwards.challenges}>DESAFIOS</h4>
+                  <h4 className={stylesAwards.xp}>EXPERIÊNCIA</h4>
+              </div>
+          </div> */}
+          <ListCards />
+      </section>
   </div>
-    }</CountdownProvider>
+    }
+    </div>
+    </CountdownProvider>
   </ChallengesProvider>
   )
 }

@@ -46,9 +46,13 @@
         font-size: 87.5%;
     }
 }
+html{
+    height: 100%;
+}
 body{
     background: var(--background);
     color: var(--text);
+
 }
 body, input, textarea, button{
     font: 400 1rem "Inter", sans-serif;
@@ -60,4 +64,3 @@ a{
     color: inherit;
     text-decoration: none;
 }
-
