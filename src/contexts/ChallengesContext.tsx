@@ -105,7 +105,17 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
         const {data} = await axios.get('api/users');
         setAllUsers(data.allUsers.data);
     }
-
+    function dynamicSort(property) {
+        var sortOrder = 1;
+        if(property[0] === "-") {
+            sortOrder = -1;
+            property = property.substr(1);
+        }
+        return function (a,b) {
+            var result = (a[property] > b[property]) ? -1 : (a[property] < b[property]) ? 1 : 0;
+            return result * sortOrder;
+        }
+    }
     useEffect(()=>{
         if(followers.length > 0
             && allUsers.length > 0
@@ -121,13 +131,14 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
             })
             awards = awards.filter((award)=>{return award !== undefined});
             awards.push({
-                photo: dataUser.data.avatar_url,
+                _id: idUser,
                 user: dataUser.data.login,
-                level: level,
                 challengesCompleted:challengesCompleted,
-                currentExperience:currentExperience
+                currentExperience:currentExperience,
+                level: level,
+                photo: dataUser.data.avatar_url,
             })
-            awards = awards.sort((user)=>user.currentExperience)
+            awards = awards.sort(dynamicSort("currentExperience"));
             setUsersRegistered(awards);
         } 
     },[followers,allUsers,dataUser])
