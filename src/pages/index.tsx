@@ -12,9 +12,13 @@ export default function Landing({client_id}){
     }
     return(
         <div className={styles.container}>
-            <img src="/landing.svg" alt="Water Mark"/>
+            <div className={styles.logo}>
+                <h1 className={styles.await}>Await</h1>
+                <h1 className={styles.dev}>Dev</h1>
+                <h1 className={styles.bracket}>()</h1>
+                <div className={styles.cursor}/>
+            </div>
             <section>
-                <img src="/logo.svg" alt="logo"/>
                 <div>
                     <h2>Bem-vindo</h2>
                     <button

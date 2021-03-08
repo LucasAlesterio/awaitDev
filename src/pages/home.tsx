@@ -17,7 +17,6 @@ import styles from '../styles/pages/Home.module.css';
 export default function Home(){
 
   const [page,setPage] = useState('home');
-
   return (
   <ChallengesProvider >
   <CountdownProvider>

@@ -1,30 +1,64 @@
+@keyframes cursorAnimation {
+    from{
+        opacity: 1;
+    }to{
+        opacity: 0;
+    }
+}
+
 .container{
     height: 100vh;
     max-width: 100vw;
-    background-image: linear-gradient(var(--blue),rgb(73, 118, 186));
+    background: var(--background);
     display: flex;
+    background-repeat: no-repeat;
+    background-image: url("/background.svg" );
+    background-size: cover;
+    justify-content: space-between;
 }
 .container > img{
-    width: 50vw;
+    width: auto;
+    min-height: 100%;
     position: fixed;
+}
+.container .logo{
+    display: flex;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+    padding-left: 2rem;
+}
+.container .logo .cursor{
+    background-color: var(--text);
+    width: 1.5rem;
+    height: 6rem;
+    animation: cursorAnimation 1s ease-in-out infinite;
+}
+.container .await, .container .dev, .container .bracket{
+    font-family: 'Fira Code', monospace;
+    font-size: 5rem;
+}
+.container .await{
+    color: var(--blue);
+    padding-right: 1.5rem;
+}
+.container .dev{
+    color: var(--blue-dark);
+}
+.container .bracket{
+    color: var(--blue);
 }
 .container section{
     z-index: 2;
-    position: fixed;
-    right: 0;
     height: 100%;
     display: flex;
     flex-direction: column;
-    min-width: 30%;
-    justify-content: space-evenly;
+    justify-content: center;
+    min-width: 50%;
     align-items: center;
-    margin-right: 10%;
-}
-.container section > img{
-    width: 100%;
 }
 .container section > div{
-    width: 100%;
+    margin-top: 10rem;
 }
 .container section h2{
     color: white;
@@ -53,11 +87,14 @@
     text-align: left;
 }
 
-@media(max-width: 750px){
-    .container > img{
-        display: none;
-    }
+@media(max-width: 900px){
     .container section{
         width: 100%;
+    }
+    .container .logo{
+
+    }
+    .container{
+        flex-direction: column;
     }
 }
