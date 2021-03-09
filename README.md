@@ -1,3 +1,10 @@
+<img src="printscreens/landing.gif" alt="landing page"/>
+<img src="printscreens/awards.png" alt="landing page"/>
+<img src="printscreens/challenge.png" alt="landing page"/>
+<img src="printscreens/landing_image.png" alt="landing page"/>
+<img src="printscreens/level_up.png" alt="landing page"/>
+<img src="printscreens/home.png" alt="landing page"/>
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
