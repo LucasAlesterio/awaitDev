@@ -3,21 +3,38 @@
         .containerImage{
             display: flex;
             width: 100%;
-            border: blue solid 3px;
         }
         .containerImage img{
-            width: fit-content;
+            width: 50%;
+            padding: 5px;
+        }
+        .logo{
+            display: flex;
+        }
+        .await, .bracket{
+            color:#ED039D;
+            padding-right: 8px;
+        }
+        .dev{
+            color: #7000FF;
         }
     </style>
-    <div class="containerImage">
-    <img src="printscreens/landing.gif" alt="landing page"/>
-    <img src="printscreens/awards.png" alt="landing page"/>
-    <img src="printscreens/challenge.png" alt="landing page"/>
+    <div class="logo">
+        <h1 class="await">Await</h1>
+        <h1 class="dev">Dev</h1>
+        <h1 class="bracket">()</h1>
     </div>
     <div class="containerImage">
-    <img src="printscreens/landing_image.png" alt="landing page"/>
-    <img src="printscreens/level_up.png" alt="landing page"/>
-    <img src="printscreens/home.png" alt="landing page"/>
+        <img src="printscreens/landing.gif" alt="landing page"/>
+        <img src="printscreens/awards.png" alt="landing page"/>
+    </div>
+    <div class="containerImage">
+        <img src="printscreens/challenge.png" alt="landing page"/>
+        <img src="printscreens/landing_image.png" alt="landing page"/>
+    </div>
+    <div class="containerImage">
+        <img src="printscreens/level_up.png" alt="landing page"/>
+        <img src="printscreens/home.png" alt="landing page"/>
     </div>
 </html>
 
