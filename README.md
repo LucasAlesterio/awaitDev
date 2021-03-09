@@ -1,24 +1,25 @@
-<style>
-  .containerImage{
-  display: flex;
-  width: 100%;
-  border: blue solid 3px;
-  }
-  .containerImage img{
-  width: fit-content;
-  }
-</style>
-<div class="containerImage">
-  <img src="printscreens/landing.gif" alt="landing page"/>
-  <img src="printscreens/awards.png" alt="landing page"/>
-  <img src="printscreens/challenge.png" alt="landing page"/>
- </div>
- <div class="containerImage">
-  <img src="printscreens/landing_image.png" alt="landing page"/>
-  <img src="printscreens/level_up.png" alt="landing page"/>
-  <img src="printscreens/home.png" alt="landing page"/>
- </div>
-  
+<html>
+    <style>
+        .containerImage{
+            display: flex;
+            width: 100%;
+            border: blue solid 3px;
+        }
+        .containerImage img{
+            width: fit-content;
+        }
+    </style>
+    <div class="containerImage">
+    <img src="printscreens/landing.gif" alt="landing page"/>
+    <img src="printscreens/awards.png" alt="landing page"/>
+    <img src="printscreens/challenge.png" alt="landing page"/>
+    </div>
+    <div class="containerImage">
+    <img src="printscreens/landing_image.png" alt="landing page"/>
+    <img src="printscreens/level_up.png" alt="landing page"/>
+    <img src="printscreens/home.png" alt="landing page"/>
+    </div>
+</html>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
