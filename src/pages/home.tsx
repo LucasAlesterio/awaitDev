@@ -44,16 +44,6 @@ export default function Home(){
     <div className={stylesAwards.container}>
       <section>
           <h1>Leaderboard</h1>
-          {/* <div className={stylesAwards.labels}>
-              <div>
-                  <h4 className={stylesAwards.position}>POSIÇÃO</h4>
-                  <h4 className={stylesAwards.user}>USUÁRIO</h4>
-              </div>
-              <div>
-                  <h4 className={stylesAwards.challenges}>DESAFIOS</h4>
-                  <h4 className={stylesAwards.xp}>EXPERIÊNCIA</h4>
-              </div>
-          </div> */}
           <ListCards />
       </section>
   </div>

@@ -41,6 +41,7 @@ interface UserRegistered{
     level: number;
     challengesCompleted: number;
     currentExperience: number;
+    totalExp: number;
 }
 
 interface ChallengesProviderProps{
@@ -116,6 +117,14 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
             return result * sortOrder;
         }
     }
+    function calcTotalExp(level, xp){
+        let totalExp = 0;
+        for(let lvl = 1; lvl < level; lvl++){
+            totalExp += Math.pow(((level + 1) * 4), 2 );
+        }
+        totalExp += xp;
+        return totalExp;
+    }
     useEffect(()=>{
         if(followers.length > 0
             && allUsers.length > 0
@@ -126,6 +135,7 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
                 let thisUser = (allUsers.find((user) => user.user === follow.login)) ;
                 if(thisUser){
                     thisUser.photo = follow.avatar_url;
+                    thisUser.totalExp = calcTotalExp(thisUser.level, thisUser.currentExperience);
                 }
                 return thisUser;
             })
@@ -137,8 +147,11 @@ export function ChallengesProvider({ children}: ChallengesProviderProps){
                 currentExperience:currentExperience,
                 level: level,
                 photo: dataUser.data.avatar_url,
+                totalExp: calcTotalExp(level, currentExperience)
+
             })
-            awards = awards.sort(dynamicSort("currentExperience"));
+            awards = awards.sort(dynamicSort("totalExp"));
+            console.log(awards);
             setUsersRegistered(awards);
         } 
     },[followers,allUsers,dataUser])

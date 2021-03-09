@@ -32,7 +32,7 @@
     background-color: var(--text);
     width: 1.5rem;
     height: 6rem;
-    animation: cursorAnimation 1s ease-in-out infinite;
+    animation: cursorAnimation 0.7s ease-in-out infinite;
 }
 .container .await, .container .dev, .container .bracket{
     font-family: 'Fira Code', monospace;

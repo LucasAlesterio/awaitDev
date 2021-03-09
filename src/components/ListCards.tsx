@@ -16,7 +16,7 @@ export function ListCards(){
                     name={user.user}
                     level={user.level}
                     challenges={user.challengesCompleted}
-                    xp={user.currentExperience}
+                    xp={user.totalExp}
                     />
                 ))
                 : null
